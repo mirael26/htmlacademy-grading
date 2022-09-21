@@ -1,4 +1,5 @@
 import logo from 'assets/img/logo.svg';
+import { AppUrl } from 'consts';
 import * as S from './header.styled';
 
 const Header = () => (
@@ -11,7 +12,7 @@ const Header = () => (
       <S.Navigation>
         <S.Links>
           <S.LinkItem>
-            <S.Link $isActiveLink to="/">
+            <S.Link $isActiveLink to={AppUrl.Home}>
               Квесты
             </S.Link>
           </S.LinkItem>
@@ -29,7 +30,7 @@ const Header = () => (
           </S.LinkItem>
 
           <S.LinkItem>
-            <S.Link to="/contacts">Контакты</S.Link>
+            <S.Link to={AppUrl.Contacts}>Контакты</S.Link>
           </S.LinkItem>
         </S.Links>
       </S.Navigation>

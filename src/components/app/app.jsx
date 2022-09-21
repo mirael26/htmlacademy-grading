@@ -9,6 +9,7 @@ import Contacts from 'components/contacts/contacts';
 import Home from 'components/home/home';
 import NotFound from 'components/not-found/not-found';
 import { appTheme } from './common';
+import { AppUrl } from 'consts.ts';
 import * as S from './app.styled';
 
 const App = () => (
@@ -16,13 +17,13 @@ const App = () => (
     <S.GlobalStyle />
     <Router>
       <Switch>
-        <Route exact path="/quest">
+        <Route exact path={AppUrl.Quest}>
           <DetailedQuest />
         </Route>
-        <Route exact path="/contacts">
+        <Route exact path={AppUrl.Contacts}>
           <Contacts />
         </Route>
-        <Route exact path="/">
+        <Route exact path={AppUrl.Home}>
           <Home />
         </Route>
         <Route exact path="*">
