@@ -25,6 +25,9 @@ const App = () => (
         <Route exact path="/">
           <Home />
         </Route>
+        <Route exact path="*">
+          <NotFound />
+        </Route>
       </Switch>
     </Router>
   </ThemeProvider>
