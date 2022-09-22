@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { StrictMode } from 'react';
 import { render } from 'react-dom';
 import App from 'components/app/app';
@@ -5,6 +6,7 @@ import App from 'components/app/app';
 render(
   <StrictMode>
     <App />
-  </StrictMode>,
+  </StrictMode>
+  ,
   document.getElementById('root'),
 );

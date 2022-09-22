@@ -36,7 +36,11 @@ const TabItem = styled.li`
   }
 `;
 
-const TabBtn = styled.button.attrs({ type: 'button' })`
+interface TabBtn {
+  isActive?: boolean,
+}
+
+const TabBtn = styled.button.attrs({ type: 'button' })<TabBtn>`
   display: flex;
   align-items: center;
   padding: 0;

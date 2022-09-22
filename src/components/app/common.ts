@@ -27,4 +27,6 @@ const appTheme = {
   },
 };
 
+export type AppTheme = typeof appTheme;
+
 export { appTheme };

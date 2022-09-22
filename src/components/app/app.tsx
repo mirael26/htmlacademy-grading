@@ -9,7 +9,7 @@ import Contacts from 'components/contacts/contacts';
 import Home from 'components/home/home';
 import NotFound from 'components/not-found/not-found';
 import { appTheme } from './common';
-import { AppUrl } from 'consts.ts';
+import { AppUrl } from 'consts';
 import * as S from './app.styled';
 
 const App = () => (

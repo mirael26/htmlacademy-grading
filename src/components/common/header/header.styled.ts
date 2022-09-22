@@ -64,7 +64,11 @@ const LinkItem = styled.li`
   }
 `;
 
-const Link = styled(RouterLink)`
+interface LinkProps {
+  $isActiveLink?: boolean,
+}
+
+const Link = styled(RouterLink)<LinkProps>`
   display: block;
   max-width: 100px;
   font-size: ${({ theme }) => theme.font.semibase};
