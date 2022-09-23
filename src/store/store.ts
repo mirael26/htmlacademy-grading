@@ -6,6 +6,7 @@ const store = configureStore({
   devTools: true,
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+export type TRootReducer = ReturnType<typeof store.getState>;
+export type TAppDispatch = typeof store.dispatch;
 
 export default store;

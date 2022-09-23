@@ -1,4 +1,4 @@
-import { GetGenres, LoadCurrentQuest, LoadQuests, Quest, Quests } from "types";
+import { IGetGenres, ILoadCurrentQuest, ILoadQuests, IQuest, TQuests } from "types";
 
 export const ActionType = {
   LoadQuests: 'quests/loadQuests',
@@ -7,15 +7,15 @@ export const ActionType = {
 } as const;
 
 export const ActionCreator = {
-  loadQuests: (quests: Quests): LoadQuests => ({
+  loadQuests: (quests: TQuests): ILoadQuests => ({
     type: ActionType.LoadQuests,
     payload: quests,
   }),
-  loadCurrentQuest: (quest: Quest): LoadCurrentQuest => ({
+  loadCurrentQuest: (quest: IQuest): ILoadCurrentQuest => ({
     type: ActionType.LoadCurrentQuest,
     payload: quest,
   }),
-  getGenres: (): GetGenres => ({
+  getGenres: (): IGetGenres => ({
     type: ActionType.GetGenres,
   }),
 };
