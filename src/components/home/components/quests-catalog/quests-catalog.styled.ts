@@ -38,6 +38,7 @@ const TabItem = styled.li`
 
 interface TabButtonProps {
   isActive?: boolean,
+  [key: string]: any,
 }
 
 const TabButton = styled.button.attrs({ type: 'button' })<TabButtonProps>`

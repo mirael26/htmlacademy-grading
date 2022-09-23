@@ -7,223 +7,123 @@ import { ReactComponent as IconScifi } from 'assets/img/icon-scifi.svg';
 import { ReactComponent as IconPerson } from 'assets/img/icon-person.svg';
 import { ReactComponent as IconPuzzle } from 'assets/img/icon-puzzle.svg';
 import * as S from './quests-catalog.styled';
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from 'hooks/hooks';
+import { loadQuests } from 'store/api-action';
+import { Genre, Level } from 'consts';
+import { findKeyByValue } from 'utils';
 
-const QuestsCatalog = () => (
-  <>
-    <S.Tabs>
-      <S.TabItem>
-        <S.TabButton isActive>
-          <IconAllQuests />
-          <S.TabTitle>Все квесты</S.TabTitle>
-        </S.TabButton>
-      </S.TabItem>
+const DEFAULT_GENRE = 'Default';
 
-      <S.TabItem>
-        <S.TabButton>
-          <IconAdventures />
-          <S.TabTitle>Приключения</S.TabTitle>
-        </S.TabButton>
-      </S.TabItem>
+const GenreProperty = {
+  Adventures: {
+    title: 'Приключения',
+    img: IconAdventures,
+  },
+  Horror: {
+    title: 'Ужасы',
+    img: IconHorrors,
+  },
+  Mystic: {
+    title: 'Мистика',
+    img: IconMystic,
+  },
+  Detective: {
+    title: 'Детектив',
+    img: IconDetective,
+  },
+  SciFi: {
+    title: 'Sci-fi',
+    img: IconScifi,
+  },
+};
 
-      <S.TabItem>
-        <S.TabButton>
-          <IconHorrors />
-          <S.TabTitle>Ужасы</S.TabTitle>
-        </S.TabButton>
-      </S.TabItem>
+const LevelTitle = {
+  Hard: 'сложный',
+  Medium: 'средний',
+  Easy: 'легкий',
+};
 
-      <S.TabItem>
-        <S.TabButton>
-          <IconMystic />
-          <S.TabTitle>Мистика</S.TabTitle>
-        </S.TabButton>
-      </S.TabItem>
+const QuestsCatalog = () => {
+  const quests = useAppSelector(State => State.data.quests);
+  const genres = useAppSelector(State => State.data.genres);
+  const dispatch = useAppDispatch();
 
-      <S.TabItem>
-        <S.TabButton>
-          <IconDetective />
-          <S.TabTitle>Детектив</S.TabTitle>
-        </S.TabButton>
-      </S.TabItem>
+  const [currentGenre, setCurrentGenre] = useState(DEFAULT_GENRE);
 
-      <S.TabItem>
-        <S.TabButton>
-          <IconScifi />
-          <S.TabTitle>Sci-fi</S.TabTitle>
-        </S.TabButton>
-      </S.TabItem>
-    </S.Tabs>
+  const displayedGenres = Object.keys(Genre).filter(genre => {
+    return genres?.includes(Genre[genre as keyof typeof Genre]);
+  });
 
-    <S.QuestsList>
-      <S.QuestItem>
-        <S.QuestItemLink to="/quest">
-          <S.Quest>
-            <S.QuestImage
-              src="img/preview-sklep.jpg"
-              width="344"
-              height="232"
-              alt="квест Склеп"
-            />
+  useEffect(() => {    
+    let isMounted = true;
+    if (isMounted) {
+      dispatch(loadQuests());
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [dispatch])
 
-            <S.QuestContent>
-              <S.QuestTitle>Склеп</S.QuestTitle>
+  return (
+    <>
+      <S.Tabs>
+        <S.TabItem>
+          <S.TabButton isActive={currentGenre === DEFAULT_GENRE} onClick={() => setCurrentGenre(DEFAULT_GENRE)}>
+            <IconAllQuests />
+            <S.TabTitle>Все квесты</S.TabTitle>
+          </S.TabButton>
+        </S.TabItem>
 
-              <S.QuestFeatures>
-                <S.QuestFeatureItem>
-                  <IconPerson />
-                  2–5 чел
-                </S.QuestFeatureItem>
-                <S.QuestFeatureItem>
-                  <IconPuzzle />
-                  сложный
-                </S.QuestFeatureItem>
-              </S.QuestFeatures>
-            </S.QuestContent>
-          </S.Quest>
-        </S.QuestItemLink>
-      </S.QuestItem>
+        {displayedGenres && displayedGenres?.map((genre, i) => {
+          const currentGenreProperty = GenreProperty[genre as keyof typeof Genre];
+          return <S.TabItem key={`genre-${i}`}>
+            <S.TabButton isActive={currentGenre === genre} onClick={() => setCurrentGenre(genre)}>
+              {<currentGenreProperty.img/>}
+              <S.TabTitle>{currentGenreProperty.title}</S.TabTitle>
+            </S.TabButton>
+          </S.TabItem>
+        })}
+      </S.Tabs>
 
-      <S.QuestItem>
-        <S.QuestItemLink to="/quest">
-          <S.Quest>
-            <S.QuestImage
-              src="img/preview-maniac.jpg"
-              width="344"
-              height="232"
-              alt="квест Маньяк"
-            />
+      <S.QuestsList>
 
-            <S.QuestContent>
-              <S.QuestTitle>Маньяк</S.QuestTitle>
+        {quests && quests?.map((quest, i) => {
+          const level = findKeyByValue(quest.level, Level);
+          const levelText = level ? LevelTitle[level as keyof typeof Level] : '';
 
-              <S.QuestFeatures>
-                <S.QuestFeatureItem>
-                  <IconPerson />
-                  3–6 чел
-                </S.QuestFeatureItem>
-                <S.QuestFeatureItem>
-                  <IconPuzzle />
-                  средний
-                </S.QuestFeatureItem>
-              </S.QuestFeatures>
-            </S.QuestContent>
-          </S.Quest>
-        </S.QuestItemLink>
-      </S.QuestItem>
 
-      <S.QuestItem>
-        <S.QuestItemLink to="/quest">
-          <S.Quest>
-            <S.QuestImage
-              src="img/preview-ritual.jpg"
-              width="344"
-              height="232"
-              alt="квест Ритуал"
-            />
+          return <S.QuestItem key={`quest-${i}`}>
+            <S.QuestItemLink to={`/quest${quest.id}`}>
+              <S.Quest>
+                <S.QuestImage
+                  src={quest.previewImg}
+                  width="344"
+                  height="232"
+                  alt={`квест ${quest.title}`}
+                />
 
-            <S.QuestContent>
-              <S.QuestTitle>Ритуал</S.QuestTitle>
+                <S.QuestContent>
+                  <S.QuestTitle>{quest.title}</S.QuestTitle>
 
-              <S.QuestFeatures>
-                <S.QuestFeatureItem>
-                  <IconPerson />
-                  3–5 чел
-                </S.QuestFeatureItem>
-                <S.QuestFeatureItem>
-                  <IconPuzzle />
-                  легкий
-                </S.QuestFeatureItem>
-              </S.QuestFeatures>
-            </S.QuestContent>
-          </S.Quest>
-        </S.QuestItemLink>
-      </S.QuestItem>
-
-      <S.QuestItem>
-        <S.QuestItemLink to="/quest">
-          <S.Quest>
-            <S.QuestImage
-              src="img/preview-old-ceil.jpg"
-              width="344"
-              height="232"
-              alt="квест История призраков"
-            />
-
-            <S.QuestContent>
-              <S.QuestTitle>История призраков</S.QuestTitle>
-
-              <S.QuestFeatures>
-                <S.QuestFeatureItem>
-                  <IconPerson />
-                  5–6 чел
-                </S.QuestFeatureItem>
-                <S.QuestFeatureItem>
-                  <IconPuzzle />
-                  легкий
-                </S.QuestFeatureItem>
-              </S.QuestFeatures>
-            </S.QuestContent>
-          </S.Quest>
-        </S.QuestItemLink>
-      </S.QuestItem>
-
-      <S.QuestItem>
-        <S.QuestItemLink to="/quest">
-          <S.Quest>
-            <S.QuestImage
-              src="img/preview-final-frontier.jpg"
-              width="344"
-              height="232"
-              alt="квест Тайны старого особняка"
-            />
-
-            <S.QuestContent>
-              <S.QuestTitle>Тайны старого особняка</S.QuestTitle>
-
-              <S.QuestFeatures>
-                <S.QuestFeatureItem>
-                  <IconPerson />
-                  2–3 чел
-                </S.QuestFeatureItem>
-                <S.QuestFeatureItem>
-                  <IconPuzzle />
-                  легкий
-                </S.QuestFeatureItem>
-              </S.QuestFeatures>
-            </S.QuestContent>
-          </S.Quest>
-        </S.QuestItemLink>
-      </S.QuestItem>
-
-      <S.QuestItem>
-        <S.QuestItemLink to="/quest">
-          <S.Quest>
-            <S.QuestImage
-              src="img/preview-house-in-the-woods.jpg"
-              width="344"
-              height="232"
-              alt="квест Хижина в лесу"
-            />
-
-            <S.QuestContent>
-              <S.QuestTitle>Хижина в лесу</S.QuestTitle>
-
-              <S.QuestFeatures>
-                <S.QuestFeatureItem>
-                  <IconPerson />
-                  4–7 чел
-                </S.QuestFeatureItem>
-                <S.QuestFeatureItem>
-                  <IconPuzzle />
-                  средний
-                </S.QuestFeatureItem>
-              </S.QuestFeatures>
-            </S.QuestContent>
-          </S.Quest>
-        </S.QuestItemLink>
-      </S.QuestItem>
-    </S.QuestsList>
-  </>
-);
+                  <S.QuestFeatures>
+                    <S.QuestFeatureItem>
+                      <IconPerson />
+                      {quest.peopleCount[0]}–{quest.peopleCount[1]} чел
+                    </S.QuestFeatureItem>
+                    <S.QuestFeatureItem>
+                      <IconPuzzle />
+                      {levelText}
+                    </S.QuestFeatureItem>
+                  </S.QuestFeatures>
+                </S.QuestContent>
+              </S.Quest>
+            </S.QuestItemLink>
+          </S.QuestItem>
+        })}
+      </S.QuestsList>
+    </>
+  );
+};
 
 export default QuestsCatalog;
