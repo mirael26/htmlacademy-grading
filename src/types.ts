@@ -1,48 +1,47 @@
 // data
 
-import { ActionType } from "components/store/action";
-import { Genre as GenreList, Level as LevelList } from "consts";
+import { ActionType } from "store/action";
+import { Genre, Level } from "consts";
 
-export type Genre = typeof GenreList[keyof typeof GenreList];
-export type Level = typeof LevelList[keyof typeof LevelList];
+export type TGenre = typeof Genre[keyof typeof Genre];
+export type TLevel = typeof Level[keyof typeof Level];
 
-export interface Quest {
+export interface IQuest {
   id: number,
   title: string,
   description: string,
   previewImg: string,
   coverImg: string,
-  type: Genre,
-  level: Level,
+  type: TGenre,
+  level: TLevel,
   peopleCount: Array<number>,
   duration: number,
 }
 
-export type Quests = Array<Quest>;
+export type TQuests = Array<IQuest>;
 
 // reducers
 
-export interface DataReducer {
-  quests: Quests | null,
-  currentQuest: Quest | null,
-  genres: Array<Genre> | null,
+export interface IDataReducer {
+  quests: TQuests | null,
+  currentQuest: IQuest | null,
+  genres: Array<TGenre> | null,
 }
 
 // actions
 
-export interface LoadQuests {
+export interface ILoadQuests {
   type: typeof ActionType.LoadQuests,
-  payload: Quests,
+  payload: TQuests,
 }
 
-export interface LoadCurrentQuest {
+export interface ILoadCurrentQuest {
   type: typeof ActionType.LoadCurrentQuest,
-  payload: Quest,
+  payload: IQuest,
 }
 
-export interface GetGenres {
+export interface IGetGenres {
   type: typeof ActionType.GetGenres,
 }
 
-export type DataAction = LoadQuests | LoadCurrentQuest | GetGenres;
-export type Action = DataAction;
+export type IDataAction = ILoadQuests | ILoadCurrentQuest | IGetGenres;

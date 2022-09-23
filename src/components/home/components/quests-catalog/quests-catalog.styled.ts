@@ -36,11 +36,11 @@ const TabItem = styled.li`
   }
 `;
 
-interface TabBtn {
+interface TabButtonProps {
   isActive?: boolean,
 }
 
-const TabBtn = styled.button.attrs({ type: 'button' })<TabBtn>`
+const TabButton = styled.button.attrs({ type: 'button' })<TabButtonProps>`
   display: flex;
   align-items: center;
   padding: 0;
@@ -207,7 +207,7 @@ const QuestFeatureItem = styled.li`
 export {
   Tabs,
   TabItem,
-  TabBtn,
+  TabButton,
   TabTitle,
   QuestsList,
   QuestItem,

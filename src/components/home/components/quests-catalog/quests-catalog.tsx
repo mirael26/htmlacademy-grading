@@ -12,45 +12,45 @@ const QuestsCatalog = () => (
   <>
     <S.Tabs>
       <S.TabItem>
-        <S.TabBtn isActive>
+        <S.TabButton isActive>
           <IconAllQuests />
           <S.TabTitle>Все квесты</S.TabTitle>
-        </S.TabBtn>
+        </S.TabButton>
       </S.TabItem>
 
       <S.TabItem>
-        <S.TabBtn>
+        <S.TabButton>
           <IconAdventures />
           <S.TabTitle>Приключения</S.TabTitle>
-        </S.TabBtn>
+        </S.TabButton>
       </S.TabItem>
 
       <S.TabItem>
-        <S.TabBtn>
+        <S.TabButton>
           <IconHorrors />
           <S.TabTitle>Ужасы</S.TabTitle>
-        </S.TabBtn>
+        </S.TabButton>
       </S.TabItem>
 
       <S.TabItem>
-        <S.TabBtn>
+        <S.TabButton>
           <IconMystic />
           <S.TabTitle>Мистика</S.TabTitle>
-        </S.TabBtn>
+        </S.TabButton>
       </S.TabItem>
 
       <S.TabItem>
-        <S.TabBtn>
+        <S.TabButton>
           <IconDetective />
           <S.TabTitle>Детектив</S.TabTitle>
-        </S.TabBtn>
+        </S.TabButton>
       </S.TabItem>
 
       <S.TabItem>
-        <S.TabBtn>
+        <S.TabButton>
           <IconScifi />
           <S.TabTitle>Sci-fi</S.TabTitle>
-        </S.TabBtn>
+        </S.TabButton>
       </S.TabItem>
     </S.Tabs>
 
