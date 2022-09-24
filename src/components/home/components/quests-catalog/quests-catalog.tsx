@@ -7,11 +7,11 @@ import { ReactComponent as IconScifi } from 'assets/img/icon-scifi.svg';
 import { ReactComponent as IconPerson } from 'assets/img/icon-person.svg';
 import { ReactComponent as IconPuzzle } from 'assets/img/icon-puzzle.svg';
 import * as S from './quests-catalog.styled';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { loadQuests } from 'store/api-action';
 import { Genre } from 'consts';
-import { TGenre } from 'types';
+import { IQuest, TGenre, TQuests } from 'types';
 
 const DEFAULT_GENRE = 'Default';
 
@@ -49,7 +49,14 @@ const QuestsCatalog = () => {
   const genres = useAppSelector(State => State.data.genres);
   const dispatch = useAppDispatch();
 
-  const [currentGenre, setCurrentGenre] = useState(DEFAULT_GENRE);
+  const [currentGenre, setCurrentGenre] = useState<TGenre | typeof DEFAULT_GENRE>(DEFAULT_GENRE);
+
+  const filterQuests = (quests: TQuests | null, genre: TGenre) => {
+    return quests?.filter((quest: IQuest) => quest.type === genre) || null;
+  };
+  const filteredQuests = useMemo(() => filterQuests(quests, currentGenre as TGenre), [quests, currentGenre]);
+
+  const displayedQuests = (currentGenre === DEFAULT_GENRE) ? quests : filteredQuests;
 
   const displayedGenres: Array<TGenre> = (Object.keys(Genre) as Array<TGenre>).filter(genre => {
     return genres?.includes(genre);
@@ -88,7 +95,7 @@ const QuestsCatalog = () => {
 
       <S.QuestsList>
 
-        {quests && quests?.map((quest, i) => {
+        {displayedQuests && displayedQuests?.map((quest, i) => {
           return <S.QuestItem key={`quest-${i}`}>
             <S.QuestItemLink to={`/quest${quest.id}`}>
               <S.Quest>
