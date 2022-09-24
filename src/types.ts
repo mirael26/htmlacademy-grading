@@ -3,8 +3,8 @@
 import { ActionType } from "store/action";
 import { Genre, Level } from "consts";
 
-export type TGenre = typeof Genre[keyof typeof Genre];
-export type TLevel = typeof Level[keyof typeof Level];
+export type TGenre = keyof typeof Genre;
+export type TLevel = keyof typeof Level;
 
 export interface IQuest {
   id: number,
@@ -14,6 +14,18 @@ export interface IQuest {
   coverImg: string,
   type: TGenre,
   level: TLevel,
+  peopleCount: Array<number>,
+  duration: number,
+}
+
+export interface IQuestFromServer {
+  id: number,
+  title: string,
+  description: string,
+  previewImg: string,
+  coverImg: string,
+  type: typeof Genre[keyof typeof Genre],
+  level: typeof Level[keyof typeof Level],
   peopleCount: Array<number>,
   duration: number,
 }

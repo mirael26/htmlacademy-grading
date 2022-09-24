@@ -10,8 +10,8 @@ import * as S from './quests-catalog.styled';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { loadQuests } from 'store/api-action';
-import { Genre, Level } from 'consts';
-import { findKeyByValue } from 'utils';
+import { Genre } from 'consts';
+import { TGenre } from 'types';
 
 const DEFAULT_GENRE = 'Default';
 
@@ -36,13 +36,13 @@ const GenreProperty = {
     title: 'Sci-fi',
     img: IconScifi,
   },
-};
+} as const;
 
 const LevelTitle = {
   Hard: 'сложный',
   Medium: 'средний',
   Easy: 'легкий',
-};
+} as const;
 
 const QuestsCatalog = () => {
   const quests = useAppSelector(State => State.data.quests);
@@ -51,8 +51,8 @@ const QuestsCatalog = () => {
 
   const [currentGenre, setCurrentGenre] = useState(DEFAULT_GENRE);
 
-  const displayedGenres = Object.keys(Genre).filter(genre => {
-    return genres?.includes(Genre[genre as keyof typeof Genre]);
+  const displayedGenres: Array<TGenre> = (Object.keys(Genre) as Array<TGenre>).filter(genre => {
+    return genres?.includes(genre);
   });
 
   useEffect(() => {    
@@ -76,7 +76,7 @@ const QuestsCatalog = () => {
         </S.TabItem>
 
         {displayedGenres && displayedGenres?.map((genre, i) => {
-          const currentGenreProperty = GenreProperty[genre as keyof typeof Genre];
+          const currentGenreProperty = GenreProperty[genre];
           return <S.TabItem key={`genre-${i}`}>
             <S.TabButton isActive={currentGenre === genre} onClick={() => setCurrentGenre(genre)}>
               {<currentGenreProperty.img/>}
@@ -89,10 +89,6 @@ const QuestsCatalog = () => {
       <S.QuestsList>
 
         {quests && quests?.map((quest, i) => {
-          const level = findKeyByValue(quest.level, Level);
-          const levelText = level ? LevelTitle[level as keyof typeof Level] : '';
-
-
           return <S.QuestItem key={`quest-${i}`}>
             <S.QuestItemLink to={`/quest${quest.id}`}>
               <S.Quest>
@@ -113,7 +109,7 @@ const QuestsCatalog = () => {
                     </S.QuestFeatureItem>
                     <S.QuestFeatureItem>
                       <IconPuzzle />
-                      {levelText}
+                      {LevelTitle[quest.level]}
                     </S.QuestFeatureItem>
                   </S.QuestFeatures>
                 </S.QuestContent>
