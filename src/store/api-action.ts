@@ -1,11 +1,16 @@
 import axios from "axios";
+import { customHistory as history } from "components/app/app";
 
-import { ApiUrl } from "consts";
+import { ApiUrl, AppUrl } from "consts";
 import { ActionCreator } from "./action";
 import { adaptQuestToClient } from "./adapter";
 import { TAppDispatch } from "./store";
 
 const URL = 'http://localhost:3001';
+
+const UrlStatus = {
+  NotFound: 404,
+} as const;
 
 export const loadQuests = () => {
   return (dispatch: TAppDispatch) => {
@@ -27,6 +32,9 @@ export const loadCurrentQuest = (id: string | number) => {
       .then(response => adaptQuestToClient(response.data))
       .then(quest => dispatch(ActionCreator.loadCurrentQuest(quest)))
       .catch(error => {
+        if (error.response.status === UrlStatus.NotFound) {
+          history.push(AppUrl.NotFound);
+        }
         console.error(error);
       });
   };

@@ -10,7 +10,7 @@ import * as S from './quests-catalog.styled';
 import { useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { loadQuests } from 'store/api-action';
-import { Genre, LevelTitle } from 'consts';
+import { AppUrl, Genre, LevelTitle } from 'consts';
 import { IQuest, TGenre, TQuests } from 'types';
 
 const DEFAULT_GENRE = 'Default';
@@ -91,7 +91,7 @@ const QuestsCatalog = () => {
 
         {displayedQuests && displayedQuests?.map((quest, i) => {
           return <S.QuestItem key={`quest-${i}`}>
-            <S.QuestItemLink to={`/quest/${quest.id}`}>
+            <S.QuestItemLink to={`${AppUrl.Quest}/${quest.id}`}>
               <S.Quest>
                 <S.QuestImage
                   src={`/${quest.previewImg}`}

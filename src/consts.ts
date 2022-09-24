@@ -26,6 +26,7 @@ export const AppUrl = {
   Home: '/',
   Quest: '/quest',
   Contacts: '/contacts',
+  NotFound: '/404',
 } as const;
 
 export const ApiUrl = {
