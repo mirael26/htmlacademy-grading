@@ -17,7 +17,7 @@ const App = () => (
     <S.GlobalStyle />
     <Router>
       <Switch>
-        <Route exact path={AppUrl.Quest}>
+        <Route exact path={`${AppUrl.Quest}/:id`}>
           <DetailedQuest />
         </Route>
         <Route exact path={AppUrl.Contacts}>

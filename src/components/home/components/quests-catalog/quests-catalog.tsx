@@ -10,12 +10,12 @@ import * as S from './quests-catalog.styled';
 import { useEffect, useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { loadQuests } from 'store/api-action';
-import { Genre } from 'consts';
+import { Genre, LevelTitle } from 'consts';
 import { IQuest, TGenre, TQuests } from 'types';
 
 const DEFAULT_GENRE = 'Default';
 
-const GenreProperty = {
+export const GenreProperty = {
   Adventures: {
     title: 'Приключения',
     img: IconAdventures,
@@ -36,12 +36,6 @@ const GenreProperty = {
     title: 'Sci-fi',
     img: IconScifi,
   },
-} as const;
-
-const LevelTitle = {
-  Hard: 'сложный',
-  Medium: 'средний',
-  Easy: 'легкий',
 } as const;
 
 const QuestsCatalog = () => {
@@ -97,10 +91,10 @@ const QuestsCatalog = () => {
 
         {displayedQuests && displayedQuests?.map((quest, i) => {
           return <S.QuestItem key={`quest-${i}`}>
-            <S.QuestItemLink to={`/quest${quest.id}`}>
+            <S.QuestItemLink to={`/quest/${quest.id}`}>
               <S.Quest>
                 <S.QuestImage
-                  src={quest.previewImg}
+                  src={`/${quest.previewImg}`}
                   width="344"
                   height="232"
                   alt={`квест ${quest.title}`}

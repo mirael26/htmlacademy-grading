@@ -14,6 +14,12 @@ export const Level = {
   Easy: 'easy',
 } as const;
 
+export const LevelTitle = {
+  Hard: 'сложный',
+  Medium: 'средний',
+  Easy: 'легкий',
+} as const;
+
 // url
 
 export const AppUrl = {

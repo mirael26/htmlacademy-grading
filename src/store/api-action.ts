@@ -19,3 +19,15 @@ export const loadQuests = () => {
       });
   };
 }
+
+export const loadCurrentQuest = (id: string | number) => {
+  return (dispatch: TAppDispatch) => {
+    axios
+      .get(`${URL}${ApiUrl.Quests}/${id}`)
+      .then(response => adaptQuestToClient(response.data))
+      .then(quest => dispatch(ActionCreator.loadCurrentQuest(quest)))
+      .catch(error => {
+        console.error(error);
+      });
+  };
+}
