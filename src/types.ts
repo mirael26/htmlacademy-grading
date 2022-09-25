@@ -33,6 +33,13 @@ export interface IQuestFromServer {
 
 export type TQuests = Array<IQuest>;
 
+export interface IUserInfo {
+  name: string,
+  phone: string,
+  peopleCount: number | null,
+  isLegal: boolean,
+}
+
 // reducers
 
 export interface IDataReducer {
