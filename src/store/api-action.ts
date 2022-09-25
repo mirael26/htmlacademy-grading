@@ -2,6 +2,7 @@ import axios from "axios";
 import { customHistory as history } from "components/app/app";
 
 import { ApiUrl, AppUrl } from "consts";
+import { IUserInfo } from "types";
 import { ActionCreator } from "./action";
 import { adaptQuestToClient } from "./adapter";
 import { TAppDispatch } from "./store";
@@ -35,6 +36,21 @@ export const loadCurrentQuest = (id: string | number) => {
         if (error.response.status === UrlStatus.NotFound) {
           history.push(AppUrl.NotFound);
         }
+        console.error(error);
+      });
+  };
+}
+
+export const postOrder = (orderInfo: IUserInfo) => {
+  return () => {
+    axios
+      .post(`${URL}${ApiUrl.Order}`, orderInfo)
+      .then(() => {
+        alert('Заявка успешно отправлена');
+        history.push(AppUrl.Home);
+      }
+      )
+      .catch(error => {
         console.error(error);
       });
   };
