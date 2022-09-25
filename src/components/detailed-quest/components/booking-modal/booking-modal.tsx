@@ -103,6 +103,7 @@ const BookingModal = ({onPopupClose}: BookingModalClose) => {
               value={formValue.name}
               onChange={evt => handleInputChange(evt, 'name')}
             />
+            {errors.name && <S.BookingErrorMessage>{errors.name}</S.BookingErrorMessage>}
           </S.BookingField>
           <S.BookingField>
             <S.BookingLabel htmlFor="booking-phone">
@@ -117,6 +118,7 @@ const BookingModal = ({onPopupClose}: BookingModalClose) => {
               value={formValue.phone}
               onChange={evt => handleInputChange(evt, 'phone')}
             />
+            {errors.phone && <S.BookingErrorMessage>{errors.phone}</S.BookingErrorMessage>}
           </S.BookingField>
           <S.BookingField>
             <S.BookingLabel htmlFor="booking-people">
@@ -131,6 +133,7 @@ const BookingModal = ({onPopupClose}: BookingModalClose) => {
               value={formValue.peopleCount ?? ''  }
               onChange={evt => handleInputChange(evt, 'peopleCount')}
             />
+            {errors.peopleCount && <S.BookingErrorMessage>{errors.peopleCount}</S.BookingErrorMessage>}
           </S.BookingField>
           <S.BookingSubmit type="submit">Отправить заявку</S.BookingSubmit>
           <S.BookingCheckboxWrapper>
