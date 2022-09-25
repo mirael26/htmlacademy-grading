@@ -24,7 +24,7 @@ export const LevelTitle = {
 
 export const AppUrl = {
   Home: '/',
-  Quest: '/quest',
+  Quest: '/detailed-quest',
   Contacts: '/contacts',
   NotFound: '/404',
 } as const;
