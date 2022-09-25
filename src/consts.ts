@@ -22,7 +22,7 @@ export const LevelTitle = {
 
 export const RegExpTest = {
   Name: /^[A-Za-zА-Яа-я0-9 .,@-_]+$/,
-  Phone: /^((\+7|7|8)+([0-9]){10})$/,
+  Phone: /^(([0-9]){10})$/,
   PeopleCount: /^[0-9]+$/,
 };
 

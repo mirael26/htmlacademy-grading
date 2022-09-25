@@ -90,6 +90,7 @@ const BookingLabel = styled.label`
 `;
 
 const BookingInput = styled.input`
+  width: 100%;
   padding-top: 17px;
   padding-right: 24px;
   padding-bottom: 18px;
@@ -110,6 +111,23 @@ const BookingInput = styled.input`
   &:focus,
   &:hover {
     opacity: 0.8;
+  }
+
+  &#booking-phone {
+    padding-left: 39px;
+  }
+`;
+
+const BookingInputWrapper = styled.div`
+  position: relative;
+
+  &::before {
+    position: absolute;
+    content: '+7';
+    top: 16px;
+    left: 24px;
+    font-size: 12px;
+    color: ${({ theme }) => theme.color.white};
   }
 `;
 
@@ -224,6 +242,7 @@ export {
   BookingField,
   BookingLabel,
   BookingInput,
+  BookingInputWrapper,
   BookingSubmit,
   BookingCheckboxWrapper,
   BookingCheckboxLabel,

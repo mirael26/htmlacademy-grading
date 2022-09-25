@@ -3,10 +3,12 @@ import { ReactComponent as IconClose } from 'assets/img/icon-close.svg';
 import { useState } from 'react';
 import { IUserInfo } from 'types';
 import { RegExpTest } from 'consts';
+import { useAppDispatch } from 'hooks/hooks';
+import { postOrder } from 'store/api-action';
 
 const ErrorMessage = {
   NameFormatError: 'В имени допускаются только буквы русского и латинского алфавита, цифры и пробел',
-  PhoneFormatError: 'Неверный формат телефонного номера',
+  PhoneFormatError: 'Номер должен состоять из 10 цифр',
   PeopleCountFormatError: 'Пожалуйста, введите число',
   PeopleCountZeroError: 'В квесте должен участвовать хотя бы один человек',
 } as const;
@@ -16,6 +18,7 @@ interface BookingModalClose {
 }
 
 const BookingModal = ({onPopupClose}: BookingModalClose) => {
+  const dispatch = useAppDispatch();
   
   const [formValue, setFormValue] = useState<IUserInfo>({name: '', phone: '', peopleCount: null, isLegal: false});
   const [errors, setErrors] = useState<{[key: string]: string | null}>({name: null, phone: null, peopleCount: null, isLegal: null});
@@ -47,6 +50,7 @@ const BookingModal = ({onPopupClose}: BookingModalClose) => {
       if (!isFormatValid) {
         setErrors(prev => ({...prev, phone: ErrorMessage.PhoneFormatError}));
       }
+      
       return isFormatValid;
     }
 
@@ -73,8 +77,7 @@ const BookingModal = ({onPopupClose}: BookingModalClose) => {
     evt.preventDefault();
     const isFormValid = checkFormValidity();
     if (isFormValid) {
-
-      // пост запрос
+      dispatch(postOrder(formValue));
     }
   };
 
@@ -109,15 +112,17 @@ const BookingModal = ({onPopupClose}: BookingModalClose) => {
             <S.BookingLabel htmlFor="booking-phone">
               Контактный телефон
             </S.BookingLabel>
-            <S.BookingInput
-              type="tel"
-              id="booking-phone"
-              name="booking-phone"
-              placeholder="Телефон"
-              required
-              value={formValue.phone}
-              onChange={evt => handleInputChange(evt, 'phone')}
-            />
+            <S.BookingInputWrapper>
+              <S.BookingInput
+                type="tel"
+                id="booking-phone"
+                name="booking-phone"
+                placeholder=""
+                required
+                value={formValue.phone}
+                onChange={evt => handleInputChange(evt, 'phone')}
+              />
+            </S.BookingInputWrapper>
             {errors.phone && <S.BookingErrorMessage>{errors.phone}</S.BookingErrorMessage>}
           </S.BookingField>
           <S.BookingField>
