@@ -5,6 +5,7 @@ import { Genre, Level } from "consts";
 
 export type TGenre = keyof typeof Genre;
 export type TLevel = keyof typeof Level;
+export type TDuration = 60 | 90 | 120;
 
 export interface IQuest {
   id: number,
@@ -15,7 +16,7 @@ export interface IQuest {
   type: TGenre,
   level: TLevel,
   peopleCount: Array<number>,
-  duration: number,
+  duration: TDuration,
 }
 
 export interface IQuestFromServer {
@@ -27,7 +28,7 @@ export interface IQuestFromServer {
   type: typeof Genre[keyof typeof Genre],
   level: typeof Level[keyof typeof Level],
   peopleCount: Array<number>,
-  duration: number,
+  duration: TDuration,
 }
 
 export type TQuests = Array<IQuest>;
