@@ -80,11 +80,10 @@ const ContactsMap = styled.div`
   margin-left: auto;
 `;
 
-const ContactsMapImage = styled.img`
+const ContactsMapFrame = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
+  width: 649px;
+  height: 336px;
 `;
 
 export {
@@ -98,5 +97,5 @@ export {
   ContactAddress,
   ContactLink,
   ContactsMap,
-  ContactsMapImage,
+  ContactsMapFrame,
 };

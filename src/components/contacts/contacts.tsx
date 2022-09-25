@@ -1,57 +1,81 @@
+import MapPinImage from 'assets/img/map-pin.png';
 import { MainLayout, PageTitle, PageSubtext } from 'components/common/common';
-import contactsMap from 'assets/img/contacts-map.jpg';
 import * as S from './contacts.styled';
+import { useEffect } from 'react';
 
-const Contacts = () => (
-  <MainLayout>
-    <S.Main>
-      <S.ContentWrapper>
-        <S.PageHeading>
-          <PageTitle>Контакты</PageTitle>
-          <PageSubtext>квесты в Санкт-Петербурге</PageSubtext>
-        </S.PageHeading>
+const DG = require('2gis-maps');
 
-        <S.Contacts>
-          <S.ContactsList>
-            <S.ContactTitle>Адрес</S.ContactTitle>
-            <S.ContactValue>
-              <S.ContactAddress>
-                Санкт-Петербург,
-                <br />
-                Набережная реки Карповка, д 5
-              </S.ContactAddress>
-            </S.ContactValue>
+const MapPin = DG.icon({
+  iconUrl: MapPinImage,
+  iconSize: [56, 70],
+  iconAnchor: [28, 60],
+});
 
-            <S.ContactTitle>Режим работы</S.ContactTitle>
-            <S.ContactValue>Ежедневно, с 9:00 до 20:00</S.ContactValue>
+const Contacts = () => {
+  
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      DG.then(function() {
+        let map;
+        map = DG.map('map', {
+            'center': [59.96840, 30.31734],
+            'zoom': 16
+        });
+        DG.marker([59.96840, 30.31734], {icon: MapPin}).addTo(map);
+      });
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, [])
 
-            <S.ContactTitle>Телефон</S.ContactTitle>
-            <S.ContactValue>
-              <S.ContactLink href="tel:8 (800) 333-55-99">
-                8 (800) 333-55-99
-              </S.ContactLink>
-            </S.ContactValue>
+  return (
+    <MainLayout>
+      <S.Main>
+        <S.ContentWrapper>
+          <S.PageHeading>
+            <PageTitle>Контакты</PageTitle>
+            <PageSubtext>квесты в Санкт-Петербурге</PageSubtext>
+          </S.PageHeading>
 
-            <S.ContactTitle>E-mail</S.ContactTitle>
-            <S.ContactValue>
-              <S.ContactLink href="mailto:info@escape-room.ru">
-                info@escape-room.ru
-              </S.ContactLink>
-            </S.ContactValue>
-          </S.ContactsList>
+          <S.Contacts>
+            <S.ContactsList>
+              <S.ContactTitle>Адрес</S.ContactTitle>
+              <S.ContactValue>
+                <S.ContactAddress>
+                  Санкт-Петербург,
+                  <br />
+                  Набережная реки Карповка, д 5
+                </S.ContactAddress>
+              </S.ContactValue>
 
-          <S.ContactsMap>
-            <S.ContactsMapImage
-              src={contactsMap}
-              alt="мы находимся по адресу Санкт-Петербург, Набережная реки Карповка, д 5"
-              width="649"
-              height="336"
-            />
-          </S.ContactsMap>
-        </S.Contacts>
-      </S.ContentWrapper>
-    </S.Main>
-  </MainLayout>
-);
+              <S.ContactTitle>Режим работы</S.ContactTitle>
+              <S.ContactValue>Ежедневно, с 9:00 до 20:00</S.ContactValue>
+
+              <S.ContactTitle>Телефон</S.ContactTitle>
+              <S.ContactValue>
+                <S.ContactLink href="tel:8 (800) 333-55-99">
+                  8 (800) 333-55-99
+                </S.ContactLink>
+              </S.ContactValue>
+
+              <S.ContactTitle>E-mail</S.ContactTitle>
+              <S.ContactValue>
+                <S.ContactLink href="mailto:info@escape-room.ru">
+                  info@escape-room.ru
+                </S.ContactLink>
+              </S.ContactValue>
+            </S.ContactsList>
+
+            <S.ContactsMap>
+              <S.ContactsMapFrame id="map"></S.ContactsMapFrame>
+            </S.ContactsMap>
+          </S.Contacts>
+        </S.ContentWrapper>
+      </S.Main>
+    </MainLayout>
+  )
+};
 
 export default Contacts;

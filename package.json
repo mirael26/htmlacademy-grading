@@ -3,6 +3,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.5",
     "@types/styled-components": "^5.1.26",
+    "2gis-maps": "^3.7.1",
     "axios": "^0.27.2",
     "history": "^4.10.1",
     "react": "17.0.2",
