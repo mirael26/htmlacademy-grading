@@ -1,12 +1,12 @@
-import MapPinImage from 'assets/img/map-pin.png';
+import mapPinImage from 'assets/img/map-pin.png';
 import { MainLayout, PageTitle, PageSubtext } from 'components/common/common';
 import * as S from './contacts.styled';
 import { useEffect } from 'react';
 
 const DG = require('2gis-maps');
 
-const MapPin = DG.icon({
-  iconUrl: MapPinImage,
+const mapPin = DG.icon({
+  iconUrl: mapPinImage,
   iconSize: [56, 70],
   iconAnchor: [28, 60],
 });
@@ -22,7 +22,7 @@ const Contacts = () => {
             'center': [59.96840, 30.31734],
             'zoom': 16
         });
-        DG.marker([59.96840, 30.31734], {icon: MapPin}).addTo(map);
+        DG.marker([59.96840, 30.31734], {icon: mapPin}).addTo(map);
       });
     }
     return () => {

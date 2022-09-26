@@ -1,4 +1,4 @@
-import { IDataAction, IDataReducer } from "types";
+import { TDataAction, IDataReducer } from "types";
 import { ActionType } from "../action";
 
 const initialState: IDataReducer = {
@@ -7,7 +7,7 @@ const initialState: IDataReducer = {
   genres: null,
 }
 
-export const dataReducer = (state = initialState, action: IDataAction) => {
+export const dataReducer = (state = initialState, action: TDataAction) => {
   switch (action.type) {
     case ActionType.LoadQuests:
       return {...state, quests: action.payload};

@@ -8,6 +8,7 @@ import { adaptQuestToClient } from "./adapter";
 import { TAppDispatch } from "./store";
 
 const URL = 'http://localhost:3001';
+const SUCCESS_ORDER_MESSAGE = 'Заявка успешно отправлена';
 
 const UrlStatus = {
   NotFound: 404,
@@ -46,7 +47,7 @@ export const postOrder = (orderInfo: IUserInfo) => {
     axios
       .post(`${URL}${ApiUrl.Order}`, orderInfo)
       .then(() => {
-        alert('Заявка успешно отправлена');
+        alert(SUCCESS_ORDER_MESSAGE);
         history.push(AppUrl.Home);
       }
       )

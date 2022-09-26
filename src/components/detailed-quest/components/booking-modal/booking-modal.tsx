@@ -13,17 +13,17 @@ const ErrorMessage = {
   PeopleCountZeroError: 'В квесте должен участвовать хотя бы один человек',
 } as const;
 
-interface BookingModalClose {
+interface IBookingModalProps {
   onPopupClose: () => void,
 }
 
-const BookingModal = ({onPopupClose}: BookingModalClose) => {
+const BookingModal = ({ onPopupClose }: IBookingModalProps) => {
   const dispatch = useAppDispatch();
   
   const [formValue, setFormValue] = useState<IUserInfo>({name: '', phone: '', peopleCount: null, isLegal: false});
   const [errors, setErrors] = useState<{[key: string]: string | null}>({name: null, phone: null, peopleCount: null, isLegal: null});
 
-  const handleInputChange = (evt: React.SyntheticEvent, name: string) => {
+  const onInputChange = (evt: React.SyntheticEvent, name: string) => {
     let value: string | number | boolean | null = (evt.target as HTMLInputElement).value;
     if (name === 'peopleCount') {
       value = (value === '') ? null : +value;
@@ -49,8 +49,7 @@ const BookingModal = ({onPopupClose}: BookingModalClose) => {
       const isFormatValid = RegExpTest.Phone.test(formValue.phone);
       if (!isFormatValid) {
         setErrors(prev => ({...prev, phone: ErrorMessage.PhoneFormatError}));
-      }
-      
+      }      
       return isFormatValid;
     }
 
@@ -73,7 +72,7 @@ const BookingModal = ({onPopupClose}: BookingModalClose) => {
     return isNameValid && isPhoneValid && isPeopleCountValid && formValue.isLegal;
   };
 
-  const handleFormSubmit = (evt: React.SyntheticEvent) => {
+  const onFormSubmit = (evt: React.SyntheticEvent) => {
     evt.preventDefault();
     const isFormValid = checkFormValidity();
     if (isFormValid) {
@@ -93,7 +92,7 @@ const BookingModal = ({onPopupClose}: BookingModalClose) => {
           action="https://echo.htmlacademy.ru"
           method="post"
           id="booking-form"
-          onSubmit={handleFormSubmit}
+          onSubmit={onFormSubmit}
         >
           <S.BookingField>
             <S.BookingLabel htmlFor="booking-name">Ваше Имя</S.BookingLabel>
@@ -104,7 +103,7 @@ const BookingModal = ({onPopupClose}: BookingModalClose) => {
               placeholder="Имя"
               required
               value={formValue.name}
-              onChange={evt => handleInputChange(evt, 'name')}
+              onChange={evt => onInputChange(evt, 'name')}
             />
             {errors.name && <S.BookingErrorMessage>{errors.name}</S.BookingErrorMessage>}
           </S.BookingField>
@@ -120,7 +119,7 @@ const BookingModal = ({onPopupClose}: BookingModalClose) => {
                 placeholder=""
                 required
                 value={formValue.phone}
-                onChange={evt => handleInputChange(evt, 'phone')}
+                onChange={evt => onInputChange(evt, 'phone')}
               />
             </S.BookingInputWrapper>
             {errors.phone && <S.BookingErrorMessage>{errors.phone}</S.BookingErrorMessage>}
@@ -136,7 +135,7 @@ const BookingModal = ({onPopupClose}: BookingModalClose) => {
               placeholder="Количество участников"
               required
               value={formValue.peopleCount ?? ''  }
-              onChange={evt => handleInputChange(evt, 'peopleCount')}
+              onChange={evt => onInputChange(evt, 'peopleCount')}
             />
             {errors.peopleCount && <S.BookingErrorMessage>{errors.peopleCount}</S.BookingErrorMessage>}
           </S.BookingField>
@@ -148,7 +147,7 @@ const BookingModal = ({onPopupClose}: BookingModalClose) => {
               name="booking-legal"
               required
               checked={formValue.isLegal}
-              onChange={evt => handleInputChange(evt, 'isLegal')}
+              onChange={evt => onInputChange(evt, 'isLegal')}
             />
             <S.BookingCheckboxLabel
               className="checkbox-label"

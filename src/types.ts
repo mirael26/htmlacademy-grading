@@ -1,5 +1,3 @@
-// data
-
 import { ActionType } from "store/action";
 import { Genre, Level } from "consts";
 
@@ -40,15 +38,11 @@ export interface IUserInfo {
   isLegal: boolean,
 }
 
-// reducers
-
 export interface IDataReducer {
   quests: TQuests | null,
   currentQuest: IQuest | null,
   genres: Array<TGenre> | null,
 }
-
-// actions
 
 export interface ILoadQuests {
   type: typeof ActionType.LoadQuests,
@@ -64,4 +58,4 @@ export interface IGetGenres {
   type: typeof ActionType.GetGenres,
 }
 
-export type IDataAction = ILoadQuests | ILoadCurrentQuest | IGetGenres;
+export type TDataAction = ILoadQuests | ILoadCurrentQuest | IGetGenres;

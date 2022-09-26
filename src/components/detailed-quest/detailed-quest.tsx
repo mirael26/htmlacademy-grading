@@ -18,7 +18,7 @@ interface IDetailedQuestParams {
 const DetailedQuest = () => {
   const quest = useAppSelector(State => State.data.currentQuest);
   const dispatch = useAppDispatch();
-  const {id} = useParams<IDetailedQuestParams>();
+  const { id } = useParams<IDetailedQuestParams>();
 
   const [isBookingModalOpened, setIsBookingModalOpened] = useState(false);
 

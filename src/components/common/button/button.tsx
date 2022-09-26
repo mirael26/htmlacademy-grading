@@ -1,12 +1,12 @@
 import { PropsWithChildren } from 'react';
 import * as S from './button.styled';
 
-interface ButtonProps {
+interface IButtonProps {
   onClick?: (args: any) => void,
   type?: 'button' | 'submit',
 }
 
-const Button = ({ children, ...props }: PropsWithChildren<ButtonProps>) => (
+const Button = ({ children, ...props }: PropsWithChildren<IButtonProps>) => (
   <S.Button {...props}>{children}</S.Button>
 );
 

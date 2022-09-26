@@ -1,5 +1,3 @@
-// data
-
 export const Genre = {
   Adventures: 'adventures',
   Horror: 'horror',
@@ -24,9 +22,7 @@ export const RegExpTest = {
   Name: /^[A-Za-zА-Яа-я0-9 .,@-_]+$/,
   Phone: /^(([0-9]){10})$/,
   PeopleCount: /^[0-9]+$/,
-};
-
-// url
+} as const;
 
 export const AppUrl = {
   Home: '/',

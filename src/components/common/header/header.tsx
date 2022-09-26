@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import * as S from './header.styled';
 
 const Header = () => {
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
 
   return (
     <S.StyledHeader>
